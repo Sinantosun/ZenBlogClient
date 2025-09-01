@@ -1,0 +1,27 @@
+<nav class="pc-sidebar">
+    <div class="navbar-wrapper">
+        <div class="m-header">
+            <h3 class="b-brand ms-2">
+                Yönetim Ekranı
+            </h3>
+        </div>
+        <div class="navbar-content">
+            <ul class="pc-navbar">
+                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="['/admin/category']" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-tag"></i></span>
+                        <span class="pc-mtext">Kategoriler</span>
+                    </a>
+                </li>
+
+                 <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="['/admin/blog']" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-cloud"></i></span>
+                        <span class="pc-mtext">Bloglar</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

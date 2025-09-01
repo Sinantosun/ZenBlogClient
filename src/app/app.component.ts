@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+declare const alertify: any
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,9 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'ZenBlogClient';
+export class AppComponent implements OnInit {
+  ngOnInit(): void {
+    alertify.set('notifier', 'position', 'top-right');
+    alertify.set('notifier', 'delay', 4);
+  }
 }

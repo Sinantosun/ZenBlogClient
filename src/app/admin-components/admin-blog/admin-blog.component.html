@@ -1,0 +1,175 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bolder">Blog İşlemleri</h4>
+                <span>Bu alanda Blogleri listeleyebilir yeni Blog ekleyebilir silebilir ve
+                    güncelleyebilirsiniz.</span>
+                <p> <small> {{totalCount}} Kayıttan 8 Kayıt Listeleniyor</small></p>
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" class="text-center">#</th>
+                                <th>Kapak Fotoğrafı</th>
+                                <th>Blog Başlığı</th>
+                                <th>Açıklama</th>
+                                <th>Kategori</th>
+                                <th>Kullanıcı</th>
+
+                                <th colspan="2" class="text-center">İşlem</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model; let i = index">
+                                <th class="text-center">{{i+1}}</th>
+                                <td><img src="{{item.coverImage}}" /></td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.category.categoryName}}</td>
+                                <td>{{item.userId}}</td>
+
+                                <td style="width: 100px;"><button (click)="removeBlog(item.id)"
+                                        class="btn btn-danger btn-sm"><i class="ti ti-trash"></i> Sil</button></td>
+                                <td style="width: 150px;"><button (click)="getBlogById(item.id)"
+                                        class="btn btn-success btn-sm"> <i class="ti ti-edit"></i> Güncelle</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="showCreateModal()" type="button" class="btn btn-primary"><i
+                            class="ti ti-plus"></i>Yeni
+                        Blog Ekle</button>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item" [class.disabled]="page === 1">
+                                <a class="page-link" style="cursor: pointer;" (click)="loadBlog(page-1)">Geri</a>
+                            </li>
+                            <li class="page-item" *ngFor="let p of totalPages">
+                                <a class="page-link" style="cursor: pointer;" [class.active]="page === p"
+                                    (click)="loadBlog(p)">{{p}}</a>
+                            </li>
+                            <li class="page-item" [class.disabled]="page === totalPages.length">
+                                <a class="page-link" style="cursor: pointer;" (click)="loadBlog(page+1)">İleri</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg Blog" #addBlogModal id="addBlogModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Blog Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form #Frm="ngForm">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="mb-2" for="BlogNameInput">Kategori Seçiniz</label>
+                        <select class="form-control mb-1" [(ngModel)]="addBlogModel.categoryId" name="categoryId">
+                            <option *ngFor="let item of categoryModel" [value]="item.id">
+                                {{ item.categoryName }}
+                            </option>
+                        </select>
+
+                        <span class="text-danger " *ngFor="let item of getErrorsFor('CategoryId')">
+                            {{ item.errorMessage }}
+                        </span>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2" for="BlogNameInput">Blog Adı</label>
+                        <input type="text" [(ngModel)]="addBlogModel.title" name="title" id="BlogNameInput"
+                            class="form-control mb-1" />
+                    </div>
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Title')">
+                        {{ item.errorMessage }}
+                    </span>
+
+                    <div class="form-group">
+                        <label class="mb-2" for="BlogNameInput">Kapak Fotoğrafı</label>
+                        <input type="text" [(ngModel)]="addBlogModel.coverImage" name="coverImage" id="BlogNameInput"
+                            class="form-control mb-1" />
+                    </div>
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('CoverImage')">
+                        {{ item.errorMessage }}
+                    </span>
+
+                    <div class="form-group">
+                        <label class="mb-2" for="BlogNameInput">Blog Fotoğrafı</label>
+                        <input type="text" [(ngModel)]="addBlogModel.blogImage" name="blogImage" id="BlogNameInput"
+                            class="form-control mb-1" />
+                    </div>
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('BlogImage')">
+                        {{ item.errorMessage }}
+                    </span>
+                    <div class="form-group">
+                        <label class="mb-2">UserId </label>
+                        <input type="text" [(ngModel)]="addBlogModel.userId" name="userId" class="form-control mb-1" />
+                    </div>
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('UserId')">
+                        {{ item.errorMessage }}
+                    </span>
+                    <div class="form-group">
+
+
+                        <label class="mb-2">Blog</label>
+                        <textarea rows="10" type="text" [(ngModel)]="addBlogModel.description" name="description"
+                            class="form-control mb-1"></textarea>
+                    </div>
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Description')">
+                        {{ item.errorMessage }}
+                    </span>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" (click)="addBlog()" class="btn btn-primary shadow-2 btn-sm">Değişiklikleri
+                        Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div #updateBlogModal class="modal fade modal-animate" id="updateBlogModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Blog Güncelleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form #Frm="ngForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="mb-2" for="BlogNameInput">Blog Adı</label>
+                        <input type="text" [(ngModel)]="updateBlogModel.title" name="title" id="BlogNameInput"
+                            class="form-control" />
+                        <span class="text-danger fw-bolder" *ngIf="error">{{error}}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary shadow-2 btn-sm" (click)="updateBlog()">Değişiklikleri
+                        Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
