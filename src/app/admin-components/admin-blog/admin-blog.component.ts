@@ -2,13 +2,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { GetBlogListModel } from '../../models/BlogModels/get-blog-list-model';
 import { AddBlogModel } from '../../models/BlogModels/add-blog-model';
 import { UpdateBlogModel } from '../../models/BlogModels/update-blog-model';
-import { AlertHandler } from '../../tools/alert-handler';
+import { SweetAlertHandler } from '../../tools/sweet-alert-handler';
 import { APIResponseHandler } from '../../tools/api-response-handler';
 import { BlogService } from '../../services/blog.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GetCategoryListModel } from '../../models/CategoryModels/get-categroy-list-model';
 import { CategoryService } from '../../services/category.service';
+import { AuthService } from '../../services/auth.service';
 declare const alertify: any;
 declare var bootstrap: any;
 
@@ -33,7 +34,7 @@ export class AdminBlogComponent {
   pageSize = 8;
   totalCount = 0;
 
-  constructor(private blogService: BlogService, private categoryService: CategoryService) {
+  constructor(private blogService: BlogService, private categoryService: CategoryService, private authservice: AuthService) {
 
   }
   getErrorsFor(prop: string) {
@@ -60,11 +61,13 @@ export class AdminBlogComponent {
   }
 
   loadBlog(page: number = 1) {
+
     this.page = page;
     this.blogService.GetPagedBlog(page).subscribe(({
       next: (response: any) => {
         this.model = response.data.values;
         this.totalCount = response.data.totalCount;
+        console.log(response);
       },
       error: (err) => { console.log(err); }
     }));
@@ -72,11 +75,14 @@ export class AdminBlogComponent {
 
   getBlogById(id: string) {
     this.error = "";
+    this.erros = [];
     this.blogService.GetBlogById(id).subscribe({
       next: (response: any) => {
+        this.loadCategoryValues();
         this.updateBlogModel = response.data;
         const modal = new bootstrap.Modal(this.updateModal.nativeElement);
         modal.show();
+
       },
       error: (err) => { console.log(err); }
     });
@@ -88,14 +94,16 @@ export class AdminBlogComponent {
         this.loadBlog();
       },
       error: (response) => {
-        this.erros = response.error.errors;
-        console.log(response);
         this.handleErr(response);
+        this.erros = response.error.errors;
+
       },
       complete: () => {
         alertify.success("Kategori Eklendi...!");
         this.error = "";
         this.addBlogModel = new AddBlogModel;
+        const modalInstance = bootstrap.Modal.getInstance(this.createModal.nativeElement);
+        modalInstance?.hide();
       }
     })
   }
@@ -105,9 +113,12 @@ export class AdminBlogComponent {
       next: (res) => {
         const modalInstance = bootstrap.Modal.getInstance(this.updateModal.nativeElement);
         modalInstance?.hide();
+
+        this.loadBlog();
       },
       error: (response) => {
         this.handleErr(response);
+        this.erros = response.error.errors;
       },
       complete: () => {
         alertify.success("Kategori Güncellendi...!");
@@ -116,7 +127,7 @@ export class AdminBlogComponent {
   }
 
   removeBlog(id: string) {
-    AlertHandler.ShowConfirmMessage().then((result) => {
+    SweetAlertHandler.ShowConfirmMessage().then((result) => {
       if (result.isConfirmed) {
         this.blogService.deleteBlog(id).subscribe({
           next: () => {
@@ -141,10 +152,13 @@ export class AdminBlogComponent {
   }
 
   showCreateModal() {
+    this.erros = [];
     this.loadCategoryValues();
     this.error = "";
     this.addBlogModel = new AddBlogModel;
     const modal = new bootstrap.Modal(this.createModal.nativeElement);
     modal.show();
+
+    this.addBlogModel.userId = this.authservice.getuserId();
   }
 }

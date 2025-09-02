@@ -8,6 +8,7 @@ export class GetBlogListModel {
     description: string = ""
     categoryId: string = "";
     userId: string = "";
+    subDescription:string = "";
 
     category: GetCategoryListModel = new GetCategoryListModel;
 }

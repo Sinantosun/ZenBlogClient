@@ -6,7 +6,7 @@ import { CategoryService } from '../../services/category.service';
 import { AddCategoryModel } from '../../models/CategoryModels/add-category-model';
 import { APIResponseHandler } from '../../tools/api-response-handler';
 import { UpdateCategoryModel } from '../../models/CategoryModels/update-category-model';
-import { AlertHandler } from '../../tools/alert-handler';
+import { SweetAlertHandler } from '../../tools/sweet-alert-handler';
 declare const alertify: any
 declare var bootstrap: any;
 
@@ -77,6 +77,8 @@ export class AdminCategoryComponent implements OnInit {
         alertify.success("Kategori Eklendi...!");
         this.error = "";
         this.addCategoryModel = new AddCategoryModel;
+        const modalInstance = bootstrap.Modal.getInstance(this.createModal.nativeElement);
+        modalInstance?.hide();
       }
     })
   }
@@ -92,12 +94,13 @@ export class AdminCategoryComponent implements OnInit {
       },
       complete: () => {
         alertify.success("Kategori Güncellendi...!");
+        this.loadCategories();
       }
     });
   }
 
   removeCategory(id: string) {
-    AlertHandler.ShowConfirmMessage().then((result) => {
+    SweetAlertHandler.ShowConfirmMessage().then((result) => {
       if (result.isConfirmed) {
         this.categoryService.deleteCategory(id).subscribe({
           next: () => {

@@ -1,0 +1,59 @@
+import { Injectable } from '@angular/core';
+import { GenericService } from './generic.service';
+import { catchError } from 'rxjs';
+import { LoginUserModel } from '../models/LoginModels/login-user-model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  constructor(private genericService: GenericService, private router: Router) { }
+
+  private decodedToken: any;
+
+  private jwtHelper: JwtHelperService = new JwtHelperService();
+
+  login(model: LoginUserModel) {
+    return this.genericService.Post("users/login", model).pipe(
+      catchError((err) => {
+        throw err;
+      })
+    );
+  }
+
+  logout() {
+    localStorage.removeItem("_jwt");
+    this.router.navigateByUrl("login");
+  }
+
+  decodeToken() {
+    let token = localStorage.getItem("_jwt");
+    if (token) {
+      return this.decodedToken = this.jwtHelper.decodeToken(token);
+    }
+    return "-1";
+  }
+
+  loggedIn() {
+    let token = localStorage.getItem("_jwt");
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  getUserName() {
+    let token = this.decodeToken();
+    return token.name;
+  }
+  getuserId() {
+    let token = this.decodeToken();
+    return token.sub;
+  }
+  getFullName() {
+    let token = this.decodeToken();
+    return token.FullName;
+  }
+
+
+}

@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const AlertHandler = {
+export const SweetAlertHandler = {
     ShowConfirmMessage(title = "Emin Misiniz?", content = "Kaydı silmek istediğinize emin misiniz bu işlem geri alınamaz..!") {
         return Swal.fire({
             title: title,
