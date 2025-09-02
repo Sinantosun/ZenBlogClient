@@ -1,0 +1,46 @@
+<ng-container *ngFor="let item of getblogsWithCategories">
+  <section id="tw-category" class="business-category section" *ngIf="item.blogs.length > 0">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="fw-bold">{{ item.categoryName }}</h2>
+        <p class="mb-0">
+          <a href="categories.html" class="btn btn-outline-primary btn-sm">{{item.categoryName}} Kategorileri <i class="bi bi-arrow-right"></i></a>
+        </p>
+      </div>
+      <hr>
+    </div>
+
+    <!-- Blog List -->
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6" *ngFor="let item2 of item.blogs">
+          <div class="card h-100 shadow-sm border-0">
+            <a href="blog-details.html" class="ratio ratio-16x9">
+              <img [src]="item2.coverImage" class="img-fluid rounded-top object-fit-cover" alt="Blog image">
+            </a>
+            <div class="card-body d-flex flex-column">
+              <div class="mb-2 text-muted small">
+                <span class="me-2">{{ item.categoryName }}</span> •
+                <span>{{ item2.createdAt | date }}</span>
+              </div>
+              <h5 class="card-title">
+                <a href="blog-details.html" [routerLink]="['/blog-detail',item2.id]" routerLinkActive="router-link-active"  class="text-decoration-none text-dark">
+                  {{ item2.title }}
+                </a>
+              </h5>
+              <p class="card-text flex-grow-1">{{ item2.subDescription }}</p>
+              <div class="d-flex align-items-center mt-3">
+                <div>
+                  <small class="fw-bold">{{ item2.user.firstName }} {{ item2.user.lastName }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</ng-container>

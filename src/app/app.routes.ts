@@ -5,18 +5,29 @@ import { AdminCategoryComponent } from './admin-components/admin-category/admin-
 import { AdminBlogComponent } from './admin-components/admin-blog/admin-blog.component';
 import { LoginComponent } from './main-components/login/login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { BlogDetailComponent } from './main-components/blog-detail/blog-detail.component';
+import { HomeComponent } from './main-components/home/home.component';
 
 
 export const routes: Routes = [
     {
         path: "",
-        redirectTo: "admin",
+        redirectTo: "home",
         pathMatch: 'full'
     },
     {
         path: "",
         component: MainLayoutComponent,
-        children: []
+        children: [
+            {
+                path: "home",
+                component: HomeComponent
+            },
+            {
+                path: "blog-detail/:id",
+                component: BlogDetailComponent
+            }
+        ]
     },
     {
         path: "admin",

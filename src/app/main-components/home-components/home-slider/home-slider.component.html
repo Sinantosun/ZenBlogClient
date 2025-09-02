@@ -1,0 +1,24 @@
+ <!-- Slider Section -->
+    <section id="slider" class="slider section dark-background">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper init-swiper">
+          <div class="swiper-wrapper">
+
+            @for (item of latestBlogs; track $index) {
+            <div class="swiper-slide" style="background-image: url('{{item.coverImage}}');">
+              <div class="content">
+                <h2><a >{{item.title}}</a></h2>
+                <p>{{item.subDescription}}</p>
+              </div>
+            </div>
+          }
+
+
+          </div>
+
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section><!-- /Slider Section -->
