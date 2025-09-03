@@ -7,12 +7,16 @@ import { LoginComponent } from './main-components/login/login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { BlogDetailComponent } from './main-components/blog-detail/blog-detail.component';
 import { HomeComponent } from './main-components/home/home.component';
+import { UserLoginComponent } from './main-components/user-login/user-login.component';
+import { AdminUserComponent } from './admin-components/admin-user/admin-user.component';
+import { AdminRoleComponent } from './admin-components/admin-role/admin-role.component';
+import { AddOrUpdateComponent } from './admin-components/add-or-update/add-or-update.component';
 
 
 export const routes: Routes = [
     {
         path: "",
-        redirectTo: "home",
+        redirectTo: "admin/category",
         pathMatch: 'full'
     },
     {
@@ -43,13 +47,33 @@ export const routes: Routes = [
                 path: "blog",
                 component: AdminBlogComponent,
                 canActivate: [AuthGuardService]
-            }
+            },
+            {
+                path: "users",
+                component: AdminUserComponent,
+                canActivate: [AuthGuardService]
+            },
+             {
+                path: "role",
+                component: AdminRoleComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: "add-role/:id",
+                component: AddOrUpdateComponent,
+                canActivate: [AuthGuardService]
+            },
         ]
     },
 
     {
         path: "login",
         component: LoginComponent
+    },
+    
+    {
+        path: "user-login",
+        component: UserLoginComponent
     }
 
 ];

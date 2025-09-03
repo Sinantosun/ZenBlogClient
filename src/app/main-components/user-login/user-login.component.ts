@@ -5,45 +5,34 @@ import { AlertifyAlertHandler } from '../../tools/alertify-alert-handler';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
 @Component({
-  selector: 'app-login',
-  imports: [FormsModule, CommonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  selector: 'app-user-login',
+  imports: [FormsModule,CommonModule],
+  templateUrl: './user-login.component.html',
+  styleUrl: './user-login.component.css'
 })
-export class LoginComponent {
+export class UserLoginComponent {
+
+
   model: LoginUserModel = new LoginUserModel;
   token: any;
-  isSuccess: boolean = false;
-
   constructor(private service: AuthService, private router: Router) {
 
   }
-
   login() {
     this.service.login(this.model).subscribe({
       next: (response: any) => {
         this.token = response.data.token;
         localStorage.setItem("_jwt", this.token);
-        let tokendetail = this.service.decodeToken();
-        if (tokendetail.role.includes("Admin")) {
-          this.isSuccess = true;
-        }
-
+        let item = this.service.decodeToken();
+        console.log(item);
       },
       error: (err) => {
         AlertifyAlertHandler.AlertifyError(err.error.errors[0].errorMessage);
       },
       complete: () => {
-
-        if (this.isSuccess) {
-          AlertifyAlertHandler.AlertifySuccess("Giriş Başarılı Hoş Geldiniz...!");
-          this.router.navigateByUrl("/admin/category");
-        }
-        else {
-          AlertifyAlertHandler.AlertifyError("Bu Sayfaya Erişim İzniniz Yok...!");
-        }
+        AlertifyAlertHandler.AlertifySuccess("Giriş Başarılı Hoş Geldiniz...!");
+        this.router.navigateByUrl("/home");
       }
     })
   }

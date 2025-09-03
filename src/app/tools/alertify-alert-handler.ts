@@ -5,7 +5,7 @@ export const AlertifyAlertHandler = {
     AlertifySuccess(text: string) {
         alertify.success(text);
     },
-    AlertifyError(text: string) {
+    AlertifyError(text: string = "Bir Hata Oluştu") {
         alertify.error(text);
     }
 }

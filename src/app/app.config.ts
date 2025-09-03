@@ -2,13 +2,15 @@ import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angul
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: LOCALE_ID, useValue: 'tr' } 
+    { provide: LOCALE_ID, useValue: 'tr', },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
   ]
 };

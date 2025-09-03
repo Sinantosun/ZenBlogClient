@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bolder">Kullanıcı İşlemleri</h4>
+                <span>Bu alanda kullanıcıları listeleyebilirisiniz.</span>
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" class="text-center">#</th>
+                                <th>Kullanıcı Adı</th>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th >İşlem</th>
+                            </tr>
+                            <tr *ngFor="let item of userModel; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.userName}}</td>
+                                <td>{{item.firstName}}</td>
+                                <td>{{item.lastName}}</td>
+                                <td style="width: 130px;"><a [routerLink]="['/admin/add-role',item.id]"   class="btn btn-primary">Rol Ata</a></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

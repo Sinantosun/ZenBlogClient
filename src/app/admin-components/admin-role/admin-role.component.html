@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bolder">Rol İşlemleri</h4>
+                <span>Bu alanda Rolleri listeleyebilir yeni Rol ekleyebilir silebilir ve
+                    güncelleyebilirsiniz.</span>
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" class="text-center">#</th>
+                                <th>Rol Adı</th>
+                                <th colspan="2" class="text-center">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of roleList; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.name}}</td>
+                                <td style="width:100px"><button (click)="deleteRole(item.id)" class="btn btn-danger"><i class="ti ti-trash"></i>
+                                        Sil</button></td>
+                                <td style="width:150px"><button (click)="getRoleById(item.id)" class="btn btn-success"><i class="ti ti-edit"></i>
+                                        Güncelle</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="showRoleCreateModal()" class="btn btn-primary"><i class="ti ti-plus"></i> Yeni Rol Ekle</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-animate category" #addCategoryModal id="addCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rol Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form #Frm="ngForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="mb-2" for="categoryNameInput">Rol Adı</label>
+                        <input type="text"  required
+                            id="categoryNameInput" [(ngModel)]="addRoleModel.name" name="name" class="form-control mb-2" />
+                        <span class="text-danger fw-bolder" *ngIf="error"> {{error}} </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" [disabled]="Frm.invalid" 
+                        class="btn btn-primary shadow-2 btn-sm" (click)="addRole()">Değişiklikleri Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-animate category" #updateCategoryModal id="updateCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rol Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form #Frm2="ngForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="mb-2" for="categoryNameInput">Rol Adı</label>
+                        <input type="text"  
+                            id="categoryNameInput" required [(ngModel)]="updateRoleModel.name" name="name" class="form-control mb-2" />
+                        <span class="text-danger fw-bolder" *ngIf="error"> {{error}} </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" [disabled]="Frm2.invalid" 
+                        class="btn btn-primary shadow-2 btn-sm" (click)="update()">Değişiklikleri Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

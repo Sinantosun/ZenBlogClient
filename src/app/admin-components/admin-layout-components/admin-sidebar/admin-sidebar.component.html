@@ -14,10 +14,23 @@
                     </a>
                 </li>
 
-                 <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                     <a [routerLink]="['/admin/blog']" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-cloud"></i></span>
                         <span class="pc-mtext">Bloglar</span>
+                    </a>
+                </li>
+
+                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="['/admin/users']" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-users"></i></span>
+                        <span class="pc-mtext">Kullanıcılar</span>
+                    </a>
+                </li>
+                   <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="['/admin/role']" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-users"></i></span>
+                        <span class="pc-mtext">Roller</span>
                     </a>
                 </li>
             </ul>

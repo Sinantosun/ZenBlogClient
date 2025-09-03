@@ -4,6 +4,7 @@ import { catchError } from 'rxjs';
 import { LoginUserModel } from '../models/LoginModels/login-user-model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { AlertifyAlertHandler } from '../tools/alertify-alert-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   constructor(private genericService: GenericService, private router: Router) { }
-
   private decodedToken: any;
 
   private jwtHelper: JwtHelperService = new JwtHelperService();
@@ -35,6 +35,22 @@ export class AuthService {
       return this.decodedToken = this.jwtHelper.decodeToken(token);
     }
     return "-1";
+  }
+
+  isAdmin() {
+    var token = this.decodeToken();
+    if (token != "-1") {
+      if (token.role.includes("Admin")) {
+        return true;
+      }
+      else{
+        AlertifyAlertHandler.AlertifyError("Bu sayfaya giriş yetkiniz yok..!");
+      }
+      return false;
+    }
+    this.router.navigateByUrl("home");
+    return false;
+
   }
 
   loggedIn() {

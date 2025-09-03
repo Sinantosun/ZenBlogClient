@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    if (this.authService.loggedIn()) { 
+    if (this.authService.loggedIn() && this.authService.isAdmin()) { 
       return true;
     }
     this.router.navigateByUrl("login");

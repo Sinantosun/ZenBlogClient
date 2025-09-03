@@ -44,7 +44,7 @@
 
           <div class="container">
 
-            <h4 class="comments-count">{{model.comments.length}} Comments</h4>
+            <h4 class="comments-count">{{model.comments.length}} Yorum</h4>
 
             <div id="comment-1" class="comment" *ngFor="let item of model.comments">
               <div class="d-flex">
@@ -58,70 +58,86 @@
                   </p>
                 </div>
               </div>
-            </div><!-- End comment #1 -->
+              <div *ngIf="item.subComments.length>0">
+                <div id="comment-reply-2" class="comment comment-reply" *ngFor="let userComment of item.subComments">
+                  <div class="d-flex">
+                    <div>
+                      <h5><a href="">{{userComment.user.firstName}} {{userComment.user.lastName}}</a> <a href="#"
+                          class="reply"><i class="bi bi-reply-fill"></i>
+                          Yanıtla</a>
+                      </h5>
+                      <time>{{userComment.commentDate |date}}</time>
+                      <p>
+                        {{userComment.body}}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
 
 
 
           </div>
 
-        </section><!-- /Blog Comments Section -->
+        </section>
 
-        <!-- Comment Form Section -->
-        <section id="comment-form" class="comment-form section">
+        <ng-template #nodata>
+          <section id="comment-form" class="comment-form section">
+            <div class="container"> 
+             <div class="alert alert-danger">
+              <span>Bu bloğa yorum yapabilmeniz için <a [routerLink]="['/user-login']" routerLinkActive="router-link-active" >Giriş</a> yapmalısınız.</span>
+             </div>
+
+            </div>
+          </section>
+        </ng-template>
+
+        <section id="comment-form" class="comment-form section" *ngIf="isLoginIn(); else nodata">
           <div class="container">
-
             <form action="">
 
-              <h4>Yorum bırakın</h4>
-              <p>Your email address will not be published. Required fields are marked * </p>
+              <h4>Yeni Yorum bırakın</h4>
+              <p>* İşaretli alanlar gereklidir.</p>
               <div class="row">
                 <div class="col-md-6 form-group">
-                  <input name="name" type="text" class="form-control" placeholder="Your Name*">
+                  <input name="name" type="text" class="form-control" placeholder="Adınız *">
                 </div>
                 <div class="col-md-6 form-group">
-                  <input name="email" type="text" class="form-control" placeholder="Your Email*">
+                  <input name="name" type="text" class="form-control" placeholder="Soyadınız *">
                 </div>
               </div>
               <div class="row">
                 <div class="col form-group">
-                  <input name="website" type="text" class="form-control" placeholder="Your Website">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
+                  <textarea name="comment" rows="20" class="form-control" placeholder="Yorumunuz *"></textarea>
                 </div>
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn btn-primary">Post Comment</button>
+                <button type="submit" class="btn btn-primary">Gönder</button>
               </div>
 
             </form>
 
           </div>
-        </section><!-- /Comment Form Section -->
+        </section>
 
       </div>
 
       <div class="col-lg-4 sidebar">
 
         <div class="widgets-container">
-
-          <!-- Blog Author Widget -->
           <div class="blog-author-widget widget-item">
 
             <div class="d-flex flex-column align-items-center">
               <div class="d-flex align-items-center w-100">
                 <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
                 <div>
-                  <h4>Jane Smith</h4>
-                  <div class="social-links">
-                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
-                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-                    <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
-                    <a href="https://instagram.com/#"><i class="biu bi-linkedin"></i></a>
-                  </div>
+                  <h4>AI Özeti</h4>
                 </div>
               </div>
 
@@ -132,31 +148,10 @@
 
             </div>
 
-          </div><!--/Blog Author Widget -->
-
-          <!-- Search Widget -->
-          <div class="search-widget widget-item">
-
-            <h3 class="widget-title">Search</h3>
-            <form action="">
-              <input type="text">
-              <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-
-          </div><!--/Search Widget -->
-
-          <!-- Recent Posts Widget -->
+          </div>
           <div class="recent-posts-widget widget-item">
 
-            <h3 class="widget-title">Recent Posts</h3>
-
-            <div class="post-item">
-              <img src="assets/img/blog/blog-recent-1.jpg" alt="" class="flex-shrink-0">
-              <div>
-                <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-            </div><!-- End recent post item-->
+            <h3 class="widget-title">Teknoloji ile ilgili 5 Blog</h3>
 
             <div class="post-item">
               <img src="assets/img/blog/blog-recent-2.jpg" alt="" class="flex-shrink-0">
@@ -164,38 +159,17 @@
                 <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
                 <time datetime="2020-01-01">Jan 1, 2020</time>
               </div>
-            </div><!-- End recent post item-->
+            </div>
 
-            <div class="post-item">
-              <img src="assets/img/blog/blog-recent-3.jpg" alt="" class="flex-shrink-0">
-              <div>
-                <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-            </div><!-- End recent post item-->
+            <div style="text-align: center !important;">
+              <a class="btn btn-link  btn-sm">Bu kategoriye ait tüm bloglar</a>
+            </div>
 
-            <div class="post-item">
-              <img src="assets/img/blog/blog-recent-4.jpg" alt="" class="flex-shrink-0">
-              <div>
-                <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-            </div><!-- End recent post item-->
 
-            <div class="post-item">
-              <img src="assets/img/blog/blog-recent-5.jpg" alt="" class="flex-shrink-0">
-              <div>
-                <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
-                <time datetime="2020-01-01">Jan 1, 2020</time>
-              </div>
-            </div><!-- End recent post item-->
-
-          </div><!--/Recent Posts Widget -->
-
-          <!-- Tags Widget -->
+          </div>
           <div class="tags-widget widget-item">
 
-            <h3 class="widget-title">Tags</h3>
+            <h3 class="widget-title">Etiketler</h3>
             <ul>
               <li><a href="#">App</a></li>
               <li><a href="#">IT</a></li>
@@ -210,7 +184,7 @@
               <li><a href="#">Marketing</a></li>
             </ul>
 
-          </div><!--/Tags Widget -->
+          </div>
 
         </div>
 
