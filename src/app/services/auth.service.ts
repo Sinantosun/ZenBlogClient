@@ -28,6 +28,11 @@ export class AuthService {
     localStorage.removeItem("_jwt");
     this.router.navigateByUrl("login");
   }
+  userlogOut() {
+    localStorage.removeItem("_jwt");
+    this.router.navigateByUrl("home");
+  }
+
 
   decodeToken() {
     let token = localStorage.getItem("_jwt");
@@ -43,12 +48,12 @@ export class AuthService {
       if (token.role.includes("Admin")) {
         return true;
       }
-      else{
+      else {
         AlertifyAlertHandler.AlertifyError("Bu sayfaya giriş yetkiniz yok..!");
+        this.router.navigateByUrl("home");
+        return true;
       }
-      return false;
     }
-    this.router.navigateByUrl("home");
     return false;
 
   }

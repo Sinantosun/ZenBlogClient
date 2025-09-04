@@ -74,6 +74,10 @@ export const routes: Routes = [
     {
         path: "user-login",
         component: UserLoginComponent
+    },
+    {
+        path: "user-login/:returnUrl",
+        component: UserLoginComponent
     }
 
 ];

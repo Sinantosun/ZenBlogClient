@@ -1,23 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginUserModel } from '../../models/LoginModels/login-user-model';
 import { AuthService } from '../../services/auth.service';
 import { AlertifyAlertHandler } from '../../tools/alertify-alert-handler';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-user-login',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './user-login.component.html',
   styleUrl: './user-login.component.css'
 })
-export class UserLoginComponent {
+export class UserLoginComponent implements OnInit {
 
 
   model: LoginUserModel = new LoginUserModel;
   token: any;
-  constructor(private service: AuthService, private router: Router) {
 
+  private returnUrl: string = "";
+  constructor(private service: AuthService, private router: Router, private activeRoute: ActivatedRoute) {
+
+  }
+  ngOnInit(): void {
+    this.activeRoute.params.subscribe(param => {
+      let url = param["returnUrl"];
+      if (url) {
+        this.returnUrl = url;
+      }
+    })
   }
   login() {
     this.service.login(this.model).subscribe({
@@ -32,7 +42,12 @@ export class UserLoginComponent {
       },
       complete: () => {
         AlertifyAlertHandler.AlertifySuccess("Giriş Başarılı Hoş Geldiniz...!");
-        this.router.navigateByUrl("/home");
+        if (this.returnUrl) { 
+           this.router.navigateByUrl(this.returnUrl);
+        }
+        else{
+           this.router.navigateByUrl("/home");
+        }
       }
     })
   }

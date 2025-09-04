@@ -11,7 +11,7 @@
             <article class="article">
 
               <div class="post-img">
-                <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                <img src="{{model.coverImage}}"alt="" class="img-fluid">
               </div>
 
               <h2 class="title">{{model.title}}</h2>
@@ -23,13 +23,13 @@
                   <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                       href="blog-details.html"><time>{{model.createdAt | date}}</time></a></li>
                   <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
-                      href="blog-details.html">{{model.comments.length }} Comments</a></li>
+                      href="blog-details.html">{{commentCount }} Yorum</a></li>
                 </ul>
               </div><!-- End meta top -->
 
               <div class="content">
                 <p>{{model.description}}</p>
-                <img src="assets/img/blog/blog-inside-post.jpg" class="img-fluid" alt="">
+                <img src="{{model.blogImage}}" class="img-fluid" alt="">
               </div><!-- End post content -->
 
 
@@ -44,36 +44,131 @@
 
           <div class="container">
 
-            <h4 class="comments-count">{{model.comments.length}} Yorum</h4>
+            <h4 class="comments-count">{{commentCount}} Yorum</h4>
 
-            <div id="comment-1" class="comment" *ngFor="let item of model.comments">
-              <div class="d-flex">
-                <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
-                <div>
-                  <h5><a href="">{{item.user.firstName}} {{item.user.lastName}}</a> <a href="#" class="reply"><i
-                        class="bi bi-reply-fill"></i> Yanıtla</a></h5>
-                  <time datetime="2020-01-01">{{item.commentDate |date}}</time>
-                  <p>
-                    {{item.body}}
-                  </p>
-                </div>
-              </div>
-              <div *ngIf="item.subComments.length>0">
-                <div id="comment-reply-2" class="comment comment-reply" *ngFor="let userComment of item.subComments">
-                  <div class="d-flex">
-                    <div>
-                      <h5><a href="">{{userComment.user.firstName}} {{userComment.user.lastName}}</a> <a href="#"
-                          class="reply"><i class="bi bi-reply-fill"></i>
-                          Yanıtla</a>
-                      </h5>
-                      <time>{{userComment.commentDate |date}}</time>
-                      <p>
-                        {{userComment.body}}
-                      </p>
+            <div id="comment-1" class="comment" *ngFor="let item of model.comments; let i = index">
+              <div class="card mb-3 shadow-sm border-0 rounded-3">
+                <div class="card-body">
+                  <div class="d-flex align-items-start">
+                    <!-- Yorum İçeriği -->
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-bold">{{item.user.firstName}} {{item.user.lastName}}</h6>
+                        <!-- Aksiyon Butonları -->
+                        <div class="btn-group btn-group-sm">
+                          <button class="btn btn-outline-primary" (click)="ShowSubCommentForm(i)"
+                            *ngIf="isLoginIn() && getUserId() != item.user.id"><i class="bi bi-reply-fill"></i>
+                            Yanıtla</button>
+
+
+                          <button class="btn btn-outline-danger" *ngIf="isLoginIn() && getUserId()==item.user.id"><i
+                              class="bi bi-trash"></i>
+                            Sil</button>
+
+                        </div>
+
+                      </div>
+                      <div class="d-flex justify-content-between mt-2">
+                        <small class="text-muted">{{item.commentDate | date:'dd MMM yyyy HH:mm'}}</small>
+                      </div>
+
+                      <p class="mt-2 mb-0">{{item.body}} </p>
+
                     </div>
                   </div>
 
                 </div>
+              </div>
+              <div class="form-group mt-2" *ngIf="item.formActive">
+                <textarea type="text" rows="10" [(ngModel)]="subCommentModel.body" name="body"
+                  class="form-control mb-3"></textarea>
+                <span *ngIf="error" class="text-danger fw-bolder">{{error}}</span>
+
+                <button class="btn btn-outline-primary btn-sm" (click)="addSubComment(item.id)">Gönder</button>
+              </div>
+              <div *ngIf="item.subComments.length > 0" class="ms-5 mt-3">
+                <div class="card mb-2 shadow-sm border-0 bg-light"
+                  *ngFor="let userComment of item.subComments; let z = index">
+
+                  <div class="card-body py-2">
+                    <div class="d-flex align-items-start">
+                      <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <h6 class="mb-0 fw-semibold">
+                            {{userComment.user.firstName}} {{userComment.user.lastName}}
+                          </h6>
+                          <div  class="btn-group btn-group-sm">
+                            <button (click)="showParentSubCommentForm(z,i)"  class="btn btn-outline-primary"
+                              *ngIf="isLoginIn() && getUserId() != userComment.user.id"><i class="bi bi-reply-fill"></i>
+                              Yanıtla</button>
+
+                            <button  class="btn btn-outline-danger"
+                              *ngIf="isLoginIn() && getUserId()==userComment.user.id"><i class="bi bi-trash"></i>
+                              Sil</button>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                          <small class="text-muted">{{userComment.commentDate | date:'dd MMM yyyy HH:mm'}}</small>
+                        </div>
+                        <p class="mt-2 mb-0">{{userComment.body}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+                  <div *ngIf="item.subComments.length > 0" class="ms-5 mt-3">
+                    <div class="card mb-2 shadow-sm border-0 bg-light"
+                      *ngFor="let parenSubComment of userComment.parentSubComments">
+
+                      <div class="card-body py-2">
+                        <div class="d-flex align-items-start">
+                          <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <h6 class="mb-0 fw-semibold">
+                                {{parenSubComment.user.firstName}} {{parenSubComment.user.lastName}}
+                              </h6>
+                              <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-danger"
+                                  *ngIf="isLoginIn() && getUserId()==parenSubComment.user.id"><i
+                                    class="bi bi-trash"></i>
+                                  Sil</button>
+                                <button (click)="showParentSubCommentForm(z,i)" class="btn btn-outline-primary"
+                                  *ngIf="isLoginIn() && getUserId()!=parenSubComment.user.id"><i
+                                    class="bi bi-reply-fill"></i>
+                                  Yanıtla</button> 
+
+
+                              </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                              <small class="text-muted">{{parenSubComment.commentDate | date:'dd MMM yyyy
+                                HH:mm'}}</small>
+                            </div>
+                            <p class="mt-2 mb-0">{{parenSubComment.body}}</p>
+                          </div>
+                        </div>
+
+                      </div>
+
+
+                    </div>
+
+                    <div class="form-group mt-2" *ngIf="item.subComments[z].isformActive">
+                      <textarea type="text" rows="10" [(ngModel)]="createParentCommentModel.body" name="body"
+                        class="form-control mb-2"></textarea>
+                      <span *ngIf="error" class="text-danger fw-bolder">{{error}}</span>
+
+                      <button class="btn btn-outline-primary btn-sm mb-3"
+                        (click)="addparentSubComment(userComment.id)">Gönder </button>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
               </div>
 
             </div>
@@ -88,10 +183,11 @@
 
         <ng-template #nodata>
           <section id="comment-form" class="comment-form section">
-            <div class="container"> 
-             <div class="alert alert-danger">
-              <span>Bu bloğa yorum yapabilmeniz için <a [routerLink]="['/user-login']" routerLinkActive="router-link-active" >Giriş</a> yapmalısınız.</span>
-             </div>
+            <div class="container">
+              <div class="alert alert-danger">
+                <span>Bu bloğa yorum yapabilmeniz için <a [routerLink]="['/user-login',`/blog-detail/${_id}`]"
+                    routerLinkActive="router-link-active">Giriş</a> yapmalısınız.</span>
+              </div>
 
             </div>
           </section>
@@ -104,21 +200,16 @@
               <h4>Yeni Yorum bırakın</h4>
               <p>* İşaretli alanlar gereklidir.</p>
               <div class="row">
-                <div class="col-md-6 form-group">
-                  <input name="name" type="text" class="form-control" placeholder="Adınız *">
-                </div>
-                <div class="col-md-6 form-group">
-                  <input name="name" type="text" class="form-control" placeholder="Soyadınız *">
-                </div>
-              </div>
-              <div class="row">
                 <div class="col form-group">
-                  <textarea name="comment" rows="20" class="form-control" placeholder="Yorumunuz *"></textarea>
+                  <textarea name="body" style="height: 300px;" rows="20" [(ngModel)]="commentModel.body"
+                    class="form-control mb-2" placeholder="Yorumunuz *"></textarea>
+
+                  <span *ngIf="error" class="text-danger fw-bolder">{{error}}</span>
                 </div>
               </div>
 
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Gönder</button>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary" (click)="AddComment()">Gönder</button>
               </div>
 
             </form>

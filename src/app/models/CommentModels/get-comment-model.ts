@@ -6,6 +6,10 @@ export class GetCommentListModel {
     user: GetUserModel = new GetUserModel;
     body: string = "";
     blogId: string = "";
-    commentDate : Date = new Date;
+    userId: string = "";
+    commentDate: Date = new Date;
     subComments: GetSubCommentModel[] = [];
+    id:string  ="";
+
+    formActive: boolean = false;
 }
