@@ -60,8 +60,7 @@
                             *ngIf="isLoginIn() && getUserId() != item.user.id"><i class="bi bi-reply-fill"></i>
                             Yanıtla</button>
 
-
-                          <button class="btn btn-outline-danger" *ngIf="isLoginIn() && getUserId()==item.user.id"><i
+                          <button class="btn btn-outline-danger" (click)="RemoveComment(item.id)" *ngIf="isLoginIn() && getUserId()==item.user.id"><i
                               class="bi bi-trash"></i>
                             Sil</button>
 
@@ -102,7 +101,7 @@
                               *ngIf="isLoginIn() && getUserId() != userComment.user.id"><i class="bi bi-reply-fill"></i>
                               Yanıtla</button>
 
-                            <button  class="btn btn-outline-danger"
+                            <button  class="btn btn-outline-danger" (click)="removeSubComment(userComment.id)"
                               *ngIf="isLoginIn() && getUserId()==userComment.user.id"><i class="bi bi-trash"></i>
                               Sil</button>
                           </div>
@@ -130,7 +129,7 @@
                                 {{parenSubComment.user.firstName}} {{parenSubComment.user.lastName}}
                               </h6>
                               <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-danger"
+                                <button class="btn btn-outline-danger" (click)="removeParentSubComment(parenSubComment.id)"
                                   *ngIf="isLoginIn() && getUserId()==parenSubComment.user.id"><i
                                     class="bi bi-trash"></i>
                                   Sil</button>

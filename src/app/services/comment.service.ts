@@ -18,4 +18,11 @@ export class CommentService {
             })
         );
     }
+    RemoveComment(id: string) {
+        return this.service.Delete(`comments/DeleteCommentAndSubComments/${id}`).pipe(
+            catchError((err) => { 
+                throw err;
+            })
+        );
+    }
 }

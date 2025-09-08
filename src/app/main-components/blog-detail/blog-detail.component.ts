@@ -13,6 +13,7 @@ import { CreateSubCommentModel } from '../../models/SubCommentModels/create-sub-
 import { SubCommentService } from '../../services/subcomment.service';
 import { ParentSubCommentService } from '../../services/parentsubcomment.service';
 import { CreateParentSubCommentModel } from '../../models/ParentSubCommentModels/create-parent-sub-comment.model';
+import { SweetAlertHandler } from '../../tools/sweet-alert-handler';
 
 
 @Component({
@@ -22,16 +23,12 @@ import { CreateParentSubCommentModel } from '../../models/ParentSubCommentModels
   styleUrl: './blog-detail.component.css'
 })
 export class BlogDetailComponent implements OnInit {
-
-
-
   model: GetBlogByIdModel = new GetBlogByIdModel;
   error: string = "";
   commentModel: CreateCommentModel = new CreateCommentModel;
   subCommentModel: CreateSubCommentModel = new CreateSubCommentModel;
   createParentCommentModel: CreateParentSubCommentModel = new CreateParentSubCommentModel;
   commentCount: number = 0;
-
 
   constructor(private route: ActivatedRoute,
     private parentSubService: ParentSubCommentService,
@@ -45,6 +42,59 @@ export class BlogDetailComponent implements OnInit {
       let id = param["id"];
       this._id = id;
       this.getBlog(id);
+    })
+  }
+  removeSubComment(id: string) {
+    SweetAlertHandler.ShowConfirmMessage("Uyarı", "Yorumunuzu silmek istediğinize emin misiniz?").then(result => {
+      if (result.isConfirmed) {
+        this.subcommentService.deleteSubComment(id).subscribe({
+          next: () => {
+            this.getBlog(this._id);
+          },
+          error: () => {
+            AlertifyAlertHandler.AlertifyError("Yorumunuz silinemedi. bir hata oluştu.");
+          },
+          complete: () => {
+            AlertifyAlertHandler.AlertifySuccess("Yorum Silindi...!");
+          }
+        })
+      }
+    })
+  }
+  removeParentSubComment(id: string) {
+    SweetAlertHandler.ShowConfirmMessage("Uyarı", "Yorumunuzu silmek istediğinize emin misiniz?").then(result => {
+      if (result.isConfirmed) {
+        this.parentSubService.deleteParentSubComment(id).subscribe({
+          next: () => {
+            this.getBlog(this._id);
+          },
+          error: (err) => {
+            console.log(err);
+            AlertifyAlertHandler.AlertifyError("Yorumunuz silinemedi. bir hata oluştu.");
+          },
+          complete: () => {
+            AlertifyAlertHandler.AlertifySuccess("Yorum Silindi...!");
+          }
+        })
+      }
+    })
+  }
+
+  RemoveComment(id: string) {
+    SweetAlertHandler.ShowConfirmMessage("Uyarı", "Yorumunuzu silmek istediğinize emin misiniz?").then(result => {
+      if (result.isConfirmed) {
+        this.commentService.RemoveComment(id).subscribe({
+          next: () => {
+            this.getBlog(this._id);
+          },
+          error: () => {
+            AlertifyAlertHandler.AlertifyError("Yorumunuz silinemedi. bir hata oluştu.");
+          },
+          complete: () => {
+            AlertifyAlertHandler.AlertifySuccess("Yorum Silindi...!");
+          }
+        })
+      }
     })
   }
 
@@ -98,7 +148,7 @@ export class BlogDetailComponent implements OnInit {
   }
 
   ShowSubCommentForm(index: number) {
-    
+
     this.model.comments.forEach((item, i) => {
       item.formActive = (i === index);
     });
@@ -116,7 +166,7 @@ export class BlogDetailComponent implements OnInit {
         this.error = result;
         AlertifyAlertHandler.AlertifyError("Yorum eklenemedi...!");
       },
-      complete: () => { 
+      complete: () => {
         AlertifyAlertHandler.AlertifySuccess("Yorum Eklendi...!");
         this.createParentCommentModel = new CreateParentSubCommentModel;
       }

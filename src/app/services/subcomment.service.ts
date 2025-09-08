@@ -19,4 +19,12 @@ export class SubCommentService {
             })
         );
     }
+
+    deleteSubComment(id: string) {
+        return this.service.Delete(`subcomments/${id}`).pipe(
+            catchError((err) => {
+                throw err;
+            })
+        )
+    }
 }

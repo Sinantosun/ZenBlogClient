@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bolder">Sosyal Medya İşlemleri</h4>
+                <span>Bu alanda Sosyal Medyaleri listeleyebilir yeni Sosyal Medya ekleyebilir silebilir ve
+                    güncelleyebilirsiniz.</span>
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" class="text-center">#</th>
+                                <th>Sosyal Medya Adı</th>
+                                <th>İkon</th>
+                                <th>Url</th>
+                                <th colspan="2" class="text-center">İşlem</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model; let i = index">
+                                <th class="text-center">{{i+1}}</th>
+                                <td>{{item.title}}</td>
+                                <td>{{item.icon}}</td>
+                                <td style="width: 200px;"><a 
+                                     href="{{item.url}}" target="_blank"  class="btn btn-primary btn-sm text-white"><i class="ti ti-arrow-forward"></i> Bağlantıyı Aç</a></td>
+                                <td style="width: 100px;"><button (click)="removesocial(item.id)"
+                                        class="btn btn-danger btn-sm"><i class="ti ti-trash"></i> Sil</button></td>
+                                <td style="width: 150px;"><button (click)="getSocialById(item.id)"
+                                        class="btn btn-success btn-sm"> <i class="ti ti-edit"></i> Güncelle</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="showCreateModal()" type="button" class="btn btn-primary"><i
+                            class="ti ti-plus"></i>Yeni
+                        Sosyal Medya Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-animate" #addsocialModal id="addsocialModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sosyal Medya Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="mb-2">Sosyal Medya Başlığı</label>
+                    <input type="text" [(ngModel)]="addsocialModel.title" name="title" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Title')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2">Link</label>
+                    <input type="text" [(ngModel)]="addsocialModel.url" name="url" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Url')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2">İkon</label>
+                    <input type="text" [(ngModel)]="addsocialModel.icon" name="icon" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Icon')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" (click)="addSocial()" class="btn btn-primary shadow-2 btn-sm">Değişiklikleri
+                    Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div #updatesocialModal class="modal fade modal-animate" id="updatesocialModal" tabindex="-1" aria-hidden="true">
+
+ <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sosyal Medya Güncelleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="mb-2">Sosyal Medya Başlığı</label>
+                    <input type="text" [(ngModel)]="updatesocialModel.title" name="title" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Title')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2">Link</label>
+                    <input type="text" [(ngModel)]="updatesocialModel.url" name="url" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Url')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2">İkon</label>
+                    <input type="text" [(ngModel)]="updatesocialModel.icon" name="icon" required id="categoryNameInput"
+                        class="form-control mb-2" />
+                    <span class="text-danger " *ngFor="let item of getErrorsFor('Icon')">
+                        {{ item.errorMessage }}
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" (click)="updateSocial()" class="btn btn-primary shadow-2 btn-sm">Değişiklikleri
+                    Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>

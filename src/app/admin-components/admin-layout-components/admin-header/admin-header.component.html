@@ -1,32 +1,35 @@
-<header class="pc-header">
+<header class="pc-header" [class.collapsed]="isCollepsed">
   <div class="header-wrapper">
     <div class="me-auto pc-mob-drp">
       <ul class="list-unstyled">
         <li class="pc-h-item pc-sidebar-collapse">
-          <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
+          <a style="cursor: pointer;" (click)="toggleSideBar()" class="pc-head-link ms-0"  id="sidebar-hide">
             <i class="ti ti-menu-2"></i>
           </a>
         </li>
-
       </ul>
     </div>
+
     <div class="ms-auto">
-      <ul class="list-unstyled">
+      <ul class="list-unstyled mb-0">
+        <li class="pc-h-item p-2"><a style="color: #000;"  target="_blank" [routerLink]="['/home']" routerLinkActive="router-link-active"  ><i class=""></i>Siteye Git</a></li>
         <li class="dropdown pc-h-item">
-          <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button"
-            aria-haspopup="false" aria-expanded="false">
-            <i class="ti ti-user"></i>
-
+          <span> {{ getNameSurname() }}</span>
+          <a class="pc-head-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" href="#"
+            role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="ti ti-user me-1"></i>
           </a>
-          <span>{{getNameSurname()}}</span>
+          <div class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="#">
+              <i class="ti ti-settings me-2"></i> Hesabım & Ayarlar
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" style="cursor: pointer;" (click)="logout()">
+              <i class="ti ti-logout me-2"></i> Çıkış Yap
+            </a>
+          </div>
         </li>
-        <li class=" pc-h-item">
-          <a class="pc-head-link  arrow-none me-0">
-            <i class="ti ti-arrow-left" ></i>
 
-          </a>
-          <span style="cursor: pointer;" (click)="logout()">Çıkış Yap</span>
-        </li>
       </ul>
     </div>
   </div>

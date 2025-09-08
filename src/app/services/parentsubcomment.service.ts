@@ -19,6 +19,13 @@ export class ParentSubCommentService {
             })
         );
     }
+    deleteParentSubComment(id: string) {
+        return this.service.Delete(`parentSubComments/${id}`).pipe(
+            catchError((err) => {
+                throw err;
+            })
+        );
+    }
 
     getList() {
         this.service.Get("parentSubComments").pipe(

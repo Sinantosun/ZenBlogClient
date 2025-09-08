@@ -11,6 +11,11 @@ import { UserLoginComponent } from './main-components/user-login/user-login.comp
 import { AdminUserComponent } from './admin-components/admin-user/admin-user.component';
 import { AdminRoleComponent } from './admin-components/admin-role/admin-role.component';
 import { AddOrUpdateComponent } from './admin-components/add-or-update/add-or-update.component';
+import { AdminSocialComponent } from './admin-components/admin-social/admin-social.component';
+import { AdminMessageComponent } from './admin-components/admin-message/admin-message.component';
+import { MessageComponent } from './main-components/message/message.component';
+import { AdminContactComponent } from './admin-components/admin-contact/admin-contact.component';
+import { AdminDashboardComponent } from './admin-components/admin-dashboard/admin-dashboard.component';
 
 
 export const routes: Routes = [
@@ -30,6 +35,10 @@ export const routes: Routes = [
             {
                 path: "blog-detail/:id",
                 component: BlogDetailComponent
+            },
+            {
+                path: "message",
+                component: MessageComponent
             }
         ]
     },
@@ -61,6 +70,26 @@ export const routes: Routes = [
             {
                 path: "add-role/:id",
                 component: AddOrUpdateComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: "social",
+                component: AdminSocialComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: "message",
+                component: AdminMessageComponent,
+                canActivate: [AuthGuardService]
+            },
+            {
+                path: "contact",
+                component: AdminContactComponent,
+                canActivate: [AuthGuardService]
+            },
+             {
+                path: "dashboard",
+                component: AdminDashboardComponent,
                 canActivate: [AuthGuardService]
             },
         ]

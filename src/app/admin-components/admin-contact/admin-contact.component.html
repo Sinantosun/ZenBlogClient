@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bolder">İletişim İşlemleri</h4>
+                <span>Bu alanda İletişimleri listeleyebilir yeni İletişim ekleyebilir silebilir ve
+                    güncelleyebilirsiniz.
+                <span>Bu alan da tek kayıt bulundurulmalıdır.</span>
+                </span>
+            </div>
+            <div class="card-body table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" class="text-center">#</th>
+                                <th>Address</th>
+                                <th>Telefon</th>
+                                <th>Email</th>
+                                <th>Map URL</th>
+                                <th colspan="2" class="text-center">İşlem</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model; let i = index">
+                                <th class="text-center">{{i+1}}</th>
+                                <td>{{item.address}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.email}}</td>
+                                <td><iframe [src]="mapUrl" width="300" height="300" style="border:0;" allowfullscreen=""
+                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></td>
+                                <td style="width: 100px;"><button (click)="removeContactInfo(item.id)"
+                                        class="btn btn-danger btn-sm"><i class="ti ti-trash"></i> Sil</button></td>
+                                <td style="width: 150px;"><button (click)="getContactInfoById(item.id)"
+                                        class="btn btn-success btn-sm"> <i class="ti ti-edit"></i> Güncelle</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="showCreateModal()" type="button" class="btn btn-primary"><i
+                            class="ti ti-plus"></i>Yeni
+                        İletişim Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-animate category" #addContactInfoModal id="addCategoryModal" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">İletişim Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Address</label>
+                    <input type="text" [(ngModel)]="addContactInfoModel.address" name="address" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Address')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Email</label>
+                    <input type="text" [(ngModel)]="addContactInfoModel.email" name="email" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Email')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Telefon</label>
+                    <input type="text" [(ngModel)]="addContactInfoModel.phone" name="phone" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Phone')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Map Linki</label>
+                    <input type="text" [(ngModel)]="addContactInfoModel.mapURL" name="mapURL" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('MapURL')">{{item.errorMessage}}</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" (click)="addContactInfo()" class="btn btn-primary shadow-2 btn-sm">Değişiklikleri
+                    Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div #updateContactInfoModal class="modal fade modal-animate" id="updateCategoryModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">İletşim Güncelleme Ekleme Ekranı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Address</label>
+                    <input type="text" [(ngModel)]="updateContactInfoModel.address" name="address" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Address')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Email</label>
+                    <input type="text" [(ngModel)]="updateContactInfoModel.email" name="email" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Email')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Telefon</label>
+                    <input type="text" [(ngModel)]="updateContactInfoModel.phone" name="phone" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('Phone')">{{item.errorMessage}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="mb-2" for="categoryNameInput">Map Linki</label>
+                    <input type="text" [(ngModel)]="updateContactInfoModel.mapURL" name="mapURL" required
+                        id="categoryNameInput" class="form-control mb-2" />
+                    <span class="text-danger" *ngFor="let item of getErrorFor('MapURL')">{{item.errorMessage}}</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" (click)="updateContactInfo()"
+                    class="btn btn-primary shadow-2 btn-sm">Değişiklikleri Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>

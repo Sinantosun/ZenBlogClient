@@ -1,40 +1,69 @@
-<nav class="pc-sidebar">
-    <div class="navbar-wrapper">
-        <div class="m-header">
-            <h3 class="b-brand ms-2">
-                Yönetim Ekranı
-            </h3>
-        </div>
-        <div class="navbar-content">
-            <ul class="pc-navbar">
-                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a [routerLink]="['/admin/category']" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-tag"></i></span>
-                        <span class="pc-mtext">Kategoriler</span>
-                    </a>
-                </li>
-
-                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a [routerLink]="['/admin/blog']" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-cloud"></i></span>
-                        <span class="pc-mtext">Bloglar</span>
-                    </a>
-                </li>
-
-                <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a [routerLink]="['/admin/users']" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-users"></i></span>
-                        <span class="pc-mtext">Kullanıcılar</span>
-                    </a>
-                </li>
-                   <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a [routerLink]="['/admin/role']" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-users"></i></span>
-                        <span class="pc-mtext">Roller</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
+<nav class="pc-sidebar pc-trigger" [ngClass]="{'pc-sidebar-hide': isCollepsed}">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <h3 class="b-brand ms-2">
+        Yönetim Ekranı
+      </h3>
     </div>
+    <div class="navbar-content d-flex flex-column justify-between" >
+
+      <ul class="pc-navbar flex-grow">
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/dashboard']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/category']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-tag"></i></span>
+            <span class="pc-mtext">Kategoriler</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/blog']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-cloud"></i></span>
+            <span class="pc-mtext">Bloglar</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/users']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-users"></i></span>
+            <span class="pc-mtext">Kullanıcılar</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/role']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-lock-access"></i></span>
+            <span class="pc-mtext">Roller</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/social']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-social"></i></span>
+            <span class="pc-mtext">Sosyal Medya</span>
+          </a>
+        </li>
+
+        <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/message']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
+            <span class="pc-mtext">Mesajlar</span>
+          </a>
+        </li>
+
+         <li class="pc-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a [routerLink]="['/admin/contact']" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-info-circle"></i></span>
+            <span class="pc-mtext">İletişim</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>

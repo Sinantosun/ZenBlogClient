@@ -8,7 +8,7 @@
 <app-admin-sidebar></app-admin-sidebar>
 <app-admin-header></app-admin-header>
 
-  <div class="pc-container">
+  <div class="pc-container" [class.collapsed]="isCollepsed">
     <div class="pc-content">
      <router-outlet></router-outlet>
     </div>

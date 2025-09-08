@@ -67,7 +67,6 @@ export class AdminBlogComponent {
       next: (response: any) => {
         this.model = response.data.values;
         this.totalCount = response.data.totalCount;
-        console.log(response);
       },
       error: (err) => { console.log(err); }
     }));
