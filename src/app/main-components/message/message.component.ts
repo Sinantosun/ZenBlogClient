@@ -1,9 +1,12 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { CreateMessageModel } from '../../models/MessageModels/create-message-model';
 import { AlertifyAlertHandler } from '../../tools/alertify-alert-handler';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ContactInfoService } from '../../services/contactinfo.service';
+import { GetContactInfoModel } from '../../models/ContactInfoModels/get-contact-info-model';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-message',
@@ -11,8 +14,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './message.component.html',
   styleUrl: './message.component.css'
 })
-export class MessageComponent {
-  constructor(private service: MessageService) {
+export class MessageComponent implements OnInit {
+  constructor(private service: MessageService, private contactinfoService: ContactInfoService, private domSantezer: DomSanitizer) {
 
   }
   @ViewChild("successDiv") successDivRef!: ElementRef;
@@ -20,6 +23,20 @@ export class MessageComponent {
   loading: boolean = false;
   errors: any[] = [];
   model: CreateMessageModel = new CreateMessageModel;
+  contactInfoModel: GetContactInfoModel[] = [];
+  resourceURL : SafeResourceUrl = "";
+  ngOnInit(): void {
+    this.loadContactInfo();
+  }
+
+  loadContactInfo() {
+    this.contactinfoService.GetAll().subscribe({
+      next: (res: any) => {
+        this.contactInfoModel = res.data;
+        this.resourceURL = this.domSantezer.bypassSecurityTrustResourceUrl(res.data[0].mapURL); //dikkat Bu method aslında Angular’ın güvenlik mekanizmasını devre dışı bırakıyor. XSS açıklarından kaçımak için dikkatli kullanılmalı. 
+      }
+    })
+  }
 
 
   getErrorFor(prop: string) {

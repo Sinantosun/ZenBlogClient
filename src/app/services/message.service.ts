@@ -27,6 +27,14 @@ export class MessageService {
         );
     }
 
+    GetMessagesForDashboard() {
+        return this.service.Get<GetMessageListModel[]>("messages/GetLastMessagesForDashboard").pipe(
+            catchError((err) => {
+                throw err;
+            })
+        );
+    }
+
     GetUnReadMessages() {
         return this.service.Get<GetMessageListModel[]>("messages/GetUnReadMessages").pipe(
             catchError((err) => {
@@ -51,7 +59,7 @@ export class MessageService {
     }
 
     DeleteMesssage(id: string) {
-      return  this.service.Delete(`messages/${id}`).pipe(
+        return this.service.Delete(`messages/${id}`).pipe(
             catchError((err) => {
                 throw err;
             })

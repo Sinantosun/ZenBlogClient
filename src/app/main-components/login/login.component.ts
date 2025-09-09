@@ -39,7 +39,7 @@ export class LoginComponent {
 
         if (this.isSuccess) {
           AlertifyAlertHandler.AlertifySuccess("Giriş Başarılı Hoş Geldiniz...!");
-          this.router.navigateByUrl("/admin/category");
+          this.router.navigateByUrl("/admin/dashboard");
         }
         else {
           AlertifyAlertHandler.AlertifyError("Bu Sayfaya Erişim İzniniz Yok...!");

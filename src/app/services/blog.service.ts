@@ -24,8 +24,31 @@ export class BlogService {
     );
   }
 
+  getMostCommentedBlogTitle() {
+    return this.service.Get("blogs/GetMostCommentedBlogTitle").pipe(
+      catchError((err) => {
+        throw err;
+      })
+    );
+  }
+   getLeastCommentedBlogTitle() {
+    return this.service.Get("blogs/GetLeastCommentBlogTitle").pipe(
+      catchError((err) => {
+        throw err;
+      })
+    );
+  }
+
   GetPagedBlog(page: number = 1): Observable<Result<GetBlogListModel[]>> {
     return this.service.Get<GetBlogListModel[]>(`blogs/getBlogByPage/${page}`).pipe(
+      catchError((err) => {
+        throw err;
+      })
+    );
+  }
+
+  getSameBlogList(id: string) {
+    return this.service.Get(`blogs/GetBlogsBySameCategoryList/${id}`).pipe(
       catchError((err) => {
         throw err;
       })

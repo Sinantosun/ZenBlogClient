@@ -20,7 +20,22 @@ export class CommentService {
     }
     RemoveComment(id: string) {
         return this.service.Delete(`comments/DeleteCommentAndSubComments/${id}`).pipe(
-            catchError((err) => { 
+            catchError((err) => {
+                throw err;
+            })
+        );
+    }
+    GetCommentAnaliyst() {
+        return this.service.Get("comments/GetBlogCommentAnalisyts").pipe(
+            catchError((err) => {
+                throw err;
+            })
+        );
+    }
+
+    translateToEnglish(text: string) {
+        return this.service.Get(`comments/GetCommentTranslatedText/${text}`).pipe(
+            catchError((err) => {
                 throw err;
             })
         );

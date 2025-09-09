@@ -9,7 +9,8 @@ export class GetCommentListModel {
     userId: string = "";
     commentDate: Date = new Date;
     subComments: GetSubCommentModel[] = [];
-    id:string  ="";
+    id: string = "";
 
     formActive: boolean = false;
+    isTranslateJobLoading: boolean = false;
 }

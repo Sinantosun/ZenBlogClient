@@ -21,7 +21,7 @@ import { AdminDashboardComponent } from './admin-components/admin-dashboard/admi
 export const routes: Routes = [
     {
         path: "",
-        redirectTo: "admin/category",
+        redirectTo: "home",
         pathMatch: 'full'
     },
     {

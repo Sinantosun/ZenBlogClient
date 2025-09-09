@@ -6,22 +6,18 @@
         </a>
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="index.html" class="active">Ana Sayfa</a></li>
-                <li><a href="about.html">Bloglar</a></li>
-                <li><a href="contact.html">İletişim</a></li>
+                <li><a [routerLink]="['/home']"  href="about.html">Bloglar</a></li>
+                <li><a [routerLink]="['/message']"  href="contact.html">İletişim</a></li>
             </ul>
 
         </nav>
 
-        <div class="header-social-links">
-            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        <div class="header-social-links" >
+            <a *ngFor="let item of socialModel" href="{{item.url}}" class="twitter" ><i class="{{item.icon}}"></i></a>
         </div>
 
     </div>
-    <div class="navmenu" style="position: relative; right:90px" *ngIf="isLogin(); else noLogin">
+    <div class="navmenu" style="position: relative; right:150px" *ngIf="isLogin(); else noLogin">
         <ul>
             <li class="dropdown"><a href="#"> <span><i class="bi bi-people"></i> {{GetFullName()}}</span><i
                         class="bi bi-chevron-down toggle-dropdown"></i></a>
