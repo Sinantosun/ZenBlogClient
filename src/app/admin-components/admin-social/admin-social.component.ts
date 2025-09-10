@@ -34,7 +34,6 @@ export class AdminSocialComponent {
   loadSocial() {
     this.socialService.GetSocial().subscribe(({
       next: (response: any) => {
-        console.log(response);
         this.model = response.data;
       },
       error: (err) => { console.log(err); }

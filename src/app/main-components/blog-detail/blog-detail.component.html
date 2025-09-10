@@ -220,23 +220,33 @@
       </div>
 
       <div class="col-lg-4 sidebar">
-
         <div class="widgets-container">
-          <div class="recent-posts-widget widget-item">
-
-            <h3 class="widget-title">Bu Kategorideki bloglar</h3>
-
-            <div class="post-item" *ngFor="let item of getSameCategoryBlogListModel">
-              <img src="{{item.coverImage}}" alt="" class="flex-shrink-0">
-              <div>
-                <h4><a [routerLink]="['/blog-detail',item.id]" routerLinkActive="router-link-active" >{{item.title}}</a></h4>
-                <time datetime="2020-01-01">{{item.createdAt | date}}</time>
-              </div>
+          <div class="recent-posts-widget widget-item card mb-4">
+            <div>
+              <h5 class="mb-0 ms-2">Bu Kategorideki Bloglar</h5>
             </div>
+            <ul class="list-group list-group-flush mt-2">
+              <li class="list-group-item p-2" *ngFor="let item of getSameCategoryBlogListModel">
+                <div class="d-flex">
+                  <img src="{{item.coverImage}}" alt="{{item.title}}" class="img-fluid  me-3"
+                    style="width: 80px; height: 80px; object-fit: cover;">
+                  <div>
+                    <h6 class="mb-1">
+                      <a [routerLink]="['/blog-detail', item.id]" routerLinkActive="router-link-active"
+                        class="text-decoration-none">
+                        {{item.title}}
+                      </a>
+                    </h6>
+                    <p class="mb-1 text-truncate" style="max-width: 200px;">{{item.subDescription}}</p>
+                    <small class="text-muted">{{item.createdAt | date:'mediumDate'}}</small>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-
       </div>
+
 
     </div>
   </div>

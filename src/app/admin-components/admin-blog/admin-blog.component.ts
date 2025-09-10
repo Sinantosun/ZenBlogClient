@@ -46,7 +46,7 @@ export class AdminBlogComponent {
 
   }
 
-  loadCategoryValues() {
+  loadBlogValues() {
     this.categoryService.GetAllCategories().subscribe({
       next: (response: any) => {
         this.categoryModel = response.data;
@@ -61,12 +61,12 @@ export class AdminBlogComponent {
   }
 
   loadBlog(page: number = 1) {
-
     this.page = page;
     this.blogService.GetPagedBlog(page).subscribe(({
       next: (response: any) => {
         this.model = response.data.values;
         this.totalCount = response.data.totalCount;
+        console.log(response);
       },
       error: (err) => { console.log(err); }
     }));
@@ -77,7 +77,7 @@ export class AdminBlogComponent {
     this.erros = [];
     this.blogService.GetBlogById(id).subscribe({
       next: (response: any) => {
-        this.loadCategoryValues();
+        this.loadBlogValues();
         this.updateBlogModel = response.data;
         const modal = new bootstrap.Modal(this.updateModal.nativeElement);
         modal.show();
@@ -98,7 +98,7 @@ export class AdminBlogComponent {
 
       },
       complete: () => {
-        alertify.success("Kategori Eklendi...!");
+        alertify.success("Blog Eklendi...!");
         this.error = "";
         this.addBlogModel = new AddBlogModel;
         const modalInstance = bootstrap.Modal.getInstance(this.createModal.nativeElement);
@@ -120,7 +120,7 @@ export class AdminBlogComponent {
         this.erros = response.error.errors;
       },
       complete: () => {
-        alertify.success("Kategori Güncellendi...!");
+        alertify.success("Blog Güncellendi...!");
       }
     });
   }
@@ -152,7 +152,7 @@ export class AdminBlogComponent {
 
   showCreateModal() {
     this.erros = [];
-    this.loadCategoryValues();
+    this.loadBlogValues();
     this.error = "";
     this.addBlogModel = new AddBlogModel;
     const modal = new bootstrap.Modal(this.createModal.nativeElement);

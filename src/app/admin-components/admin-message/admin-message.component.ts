@@ -34,7 +34,6 @@ export class AdminMessageComponent implements OnInit {
     this.model = [];
     this.service.GetMessages().subscribe({
       next: (result: any) => {
-          console.log(result.data);
         this.model = result.data;
       },
       error: (err) => { console.log(err) }
@@ -46,7 +45,6 @@ export class AdminMessageComponent implements OnInit {
     this.model = [];
     this.service.GetUnReadMessages().subscribe({
       next: (result: any) => {
-        console.log(result.data);
         this.model = result.data;
       }
     })
@@ -57,7 +55,6 @@ export class AdminMessageComponent implements OnInit {
     this.model = [];
     this.service.GetReadMessages().subscribe({
       next: (result: any) => {
-          console.log(result.data);
         this.model = result.data;
       }
     })

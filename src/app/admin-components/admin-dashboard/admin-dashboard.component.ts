@@ -60,7 +60,6 @@ export class AdminDashboardComponent implements OnInit {
     this.dashboardService.GetDashboardWidgets().subscribe({
       next: (res: any) => {
         this.getDashboardWidgetModel = res.data;
-        console.log(res);
       }
     })
   }

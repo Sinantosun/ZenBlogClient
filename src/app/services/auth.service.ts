@@ -5,6 +5,7 @@ import { LoginUserModel } from '../models/LoginModels/login-user-model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { AlertifyAlertHandler } from '../tools/alertify-alert-handler';
+import { RegisterUserModel } from '../models/UserModels/register-user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,15 @@ export class AuthService {
       })
     );
   }
+
+   registerUser(model: RegisterUserModel) {
+    return this.genericService.Post("users/Register", model).pipe(
+      catchError((err) => {
+        throw err;
+      })
+    );
+  }
+
 
   logout() {
     localStorage.removeItem("_jwt");

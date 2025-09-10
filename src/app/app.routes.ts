@@ -16,6 +16,7 @@ import { AdminMessageComponent } from './admin-components/admin-message/admin-me
 import { MessageComponent } from './main-components/message/message.component';
 import { AdminContactComponent } from './admin-components/admin-contact/admin-contact.component';
 import { AdminDashboardComponent } from './admin-components/admin-dashboard/admin-dashboard.component';
+import { UserRegisterComponent } from './main-components/user-register/user-register.component';
 
 
 export const routes: Routes = [
@@ -99,7 +100,10 @@ export const routes: Routes = [
         path: "login",
         component: LoginComponent
     },
-    
+    {
+        path: "user-register",
+        component: UserRegisterComponent
+    },
     {
         path: "user-login",
         component: UserLoginComponent

@@ -1,64 +1,92 @@
 <div class="container-fluid py-4">
     <div class="row g-3">
         <!-- Cards -->
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-3 col-xl-3">
             <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Blog Sayısı</h6>
-                    <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.blogCount}}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Kullanıcı Sayısı</h6>
-                    <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.usersCount}}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Okunmayan Mesaj Sayısı</h6>
-                    <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.unReadMessageCount}}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Kategori Sayısı</h6>
-                    <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.categoryCount}}</h3>
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Blog Sayısı</h6>
+                        <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.blogCount}}</h3>
+                    </div>
+                    <i class="ti ti-file-text fs-1 text-primary"></i> <!-- Blog ikon -->
                 </div>
             </div>
         </div>
 
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Kullanıcı Sayısı</h6>
+                        <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.usersCount}}</h3>
+                    </div>
+                    <i class="ti ti-user fs-1 text-success"></i> <!-- Kullanıcı ikon -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Okunmayan Mesaj Sayısı</h6>
+                        <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.unReadMessageCount}}</h3>
+                    </div>
+                    <i class="ti ti-mail fs-1 text-warning"></i> <!-- Mesaj ikon -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Kategori Sayısı</h6>
+                        <h3 class="fw-bold mb-0">{{getDashboardWidgetModel.categoryCount}}</h3>
+                    </div>
+                    <i class="ti ti-tag fs-1 text-info"></i> <!-- Kategori ikon -->
+                </div>
+            </div>
+        </div>
+
+
         <!-- Comment Analysis -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Olumlu Yorumlar 🤗</h6>
-                    <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.positiveCommentCount}}</h3>
-                </div>
+       <div class="col-md-6 col-xl-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="text-muted mb-2">Olumlu Yorumlar</h6>
+                <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.positiveCommentCount}}</h3>
             </div>
+            <i class="ti ti-mood-happy fs-1 text-success"></i> <!-- Olumlu ikon -->
         </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Olumsuz Yorumlar 😡</h6>
-                    <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.negativeCommentCount}}</h3>
-                </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-xl-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="text-muted mb-2">Olumsuz Yorumlar </h6>
+                <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.negativeCommentCount}}</h3>
             </div>
+            <i class="ti ti-mood-sad fs-1 text-danger"></i> <!-- Olumsuz ikon -->
         </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Nötr Yorumlar 😐</h6>
-                    <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.neutralCommentCount}}</h3>
-                </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-xl-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="text-muted mb-2">Nötr Yorumlar</h6>
+                <h3 class="fw-bold mb-0">{{getCommentAnalisytModel.neutralCommentCount}}</h3>
             </div>
+            <i class="ti ti-mood-empty fs-1 text-warning"></i> <!-- Nötr ikon -->
         </div>
+    </div>
+</div>
+
 
         <!-- Most/Least Commented Blogs -->
         <div class="col-md-6 col-xl-6">
@@ -76,7 +104,8 @@
                 <div class="card-body">
                     <h6 class="text-muted mb-2">En Az Yorum Alan Blog</h6>
                     <h5 class="fw-bold mb-0">{{leastCommentedBlogTitle}}</h5>
-                    <small><i>Alt yorumları içermez tekil yorumlar değerlendirilir.</i></small>
+                    <small><i>Alt yorumları içermez tekil yorumlar değerlendirilir, hiç yorum yapılmayan bloglar varsa
+                            karşılaşılan ilk blog baz alınır.</i></small>
 
                 </div>
             </div>

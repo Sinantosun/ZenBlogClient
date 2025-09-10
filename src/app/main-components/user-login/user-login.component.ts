@@ -4,10 +4,10 @@ import { AuthService } from '../../services/auth.service';
 import { AlertifyAlertHandler } from '../../tools/alertify-alert-handler';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-user-login',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './user-login.component.html',
   styleUrl: './user-login.component.css'
 })
@@ -34,19 +34,17 @@ export class UserLoginComponent implements OnInit {
       next: (response: any) => {
         this.token = response.data.token;
         localStorage.setItem("_jwt", this.token);
-        let item = this.service.decodeToken();
-        console.log(item);
       },
       error: (err) => {
         AlertifyAlertHandler.AlertifyError(err.error.errors[0].errorMessage);
       },
       complete: () => {
         AlertifyAlertHandler.AlertifySuccess("Giriş Başarılı Hoş Geldiniz...!");
-        if (this.returnUrl) { 
-           this.router.navigateByUrl(this.returnUrl);
+        if (this.returnUrl) {
+          this.router.navigateByUrl(this.returnUrl);
         }
-        else{
-           this.router.navigateByUrl("/home");
+        else {
+          this.router.navigateByUrl("/home");
         }
       }
     })
